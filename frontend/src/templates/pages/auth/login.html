@@ -5,27 +5,29 @@
     </a>
     <h1 class="my-3 fw-medium fs-1">Вход</h1>
 
-    <div class="input-group-custom mb-2">
+    <div class="input-group-custom">
       <div class="icon-box">
         <i class="bi bi-envelope"></i>
       </div>
-      <input type="email" class="form-control shadow-none" placeholder="Электронная почта">
+      <input type="email" class="form-control shadow-none" placeholder="Электронная почта" id="email">
     </div>
+    <span id="email-error" class="error invalid-feedback">Введите корректный E-mail</span>
 
-    <div class="input-group-custom">
+    <div class="input-group-custom mt-2">
       <div class="icon-box">
         <i class="bi bi-lock"></i>
       </div>
-      <input type="password" class="form-control shadow-none" placeholder="Пароль">
+      <input type="password" class="form-control shadow-none" placeholder="Пароль" id="password">
     </div>
+    <span id="password-error" class="error invalid-feedback">Заполните пароль</span>
 
     <div class="form-check align-self-start my-3">
-      <input class="form-check-input" type="checkbox" value="remember-me" id="checkDefault">
-      <label class="form-check-label" for="checkDefault">
+      <input class="form-check-input" type="checkbox" value="remember-me" id="remember-me">
+      <label class="form-check-label" for="remember-me">
         Запомнить меня
       </label>
     </div>
-    <button class="btn btn-primary w-100" type="submit">Войти</button>
+    <button class="btn btn-primary w-100" type="button" id="process-button">Войти</button>
     <p class="mt-2 align-self-start text-body-secondary">Ещё нет аккаунта? <a href="/signup">Пройдите регистрацию</a></p>
   </form>
 </div>
