@@ -64,12 +64,10 @@ export class Router {
         useLayout: false,
         load: () => {
           document.body.classList.add('login-page');
-          document.body.style.height = '100vh';
           new Login(this.openNewRouteBinded);
         },
         unload: () => {
           document.body.classList.remove('login-page');
-          document.body.style.height = 'auto';
         },
         styles: [
           'sign-in.css'
@@ -82,12 +80,10 @@ export class Router {
         useLayout: false,
         load: () => {
           document.body.classList.add('login-page');
-          document.body.style.height = '100vh';
           new Signup(this.openNewRouteBinded);
         },
         unload: () => {
           document.body.classList.remove('register-page');
-          document.body.style.height = 'auto';
         },
         styles: [
           'sign-in.css'
