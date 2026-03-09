@@ -1,5 +1,5 @@
 export class Login {
-  constructor() {
-
+  constructor(openNewRoute) {
+    this.openNewRoute = openNewRoute;
   }
 }
