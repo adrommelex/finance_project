@@ -1,0 +1,67 @@
+<div class="container-fluid d-flex flex-column gap-5">
+  <h1 class="page-header mb-0">Доходы и расходы</h1>
+
+  <div>
+    <button class="btn btn-success me-2" id="add-income">Создать доход</button>
+    <button class="btn btn-danger" id="add-outcome">Создать расход</button>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center justify-content-lg-start flex-wrap gap-3">
+    <button class="btn btn-secondary active">Сегодня</button>
+    <button class="btn btn-outline-secondary">Неделя</button>
+    <button class="btn btn-outline-secondary">Месяц</button>
+    <button class="btn btn-outline-secondary">Год</button>
+    <button class="btn btn-outline-secondary">Все</button>
+    <button class="btn btn-outline-secondary">Интервал</button>
+
+    <div class="d-flex align-items-center gap-2 ms-2 fs-6 fw-medium">
+      <span>с</span>
+      <a class="px-2 py-3 pointer-event text-secondary" id="date-from">Дата</a>
+      <span>по</span>
+      <a class="px-2 py-3 pointer-event text-secondary" id="date-to">Дата</a>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle" id="table">
+      <thead class="border-bottom border-top">
+      <tr>
+        <th scope="col">№ операции</th>
+        <th scope="col">Тип</th>
+        <th scope="col">Категория</th>
+        <th scope="col">Сумма</th>
+        <th scope="col">Дата</th>
+        <th scope="col">Комментарий</th>
+        <th scope="col" class="text-end"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="table-raw">
+        <th scope="row">1</th>
+        <td class="class-type text-success">доход</td>
+        <td>зарплата</td>
+        <td>500$</td>
+        <td>11.09.2022</td>
+        <td></td>
+        <td class="text-end">
+          <button class="btn btn-link link-dark p-0 me-2"><i class="bi bi-trash"></i></button>
+          <button class="btn btn-link link-dark p-0"><i class="bi bi-pencil"></i></button>
+        </td>
+      </tr>
+      <tr class="table-raw">
+        <th scope="row">2</th>
+        <td class="class-type text-danger">расход</td>
+        <td>жилье</td>
+        <td>2 500$</td>
+        <td>12.09.2022</td>
+        <td></td>
+        <td class="text-end">
+          <button class="btn btn-link link-dark p-0 me-2"><i class="bi bi-trash"></i></button>
+          <button class="btn btn-link link-dark p-0"><i class="bi bi-pencil"></i></button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
