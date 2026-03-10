@@ -28,11 +28,11 @@ export class ValidationUtils {
 
     if (condition) {
       if (errorElement) errorElement.classList.remove('d-block');
-      element.classList.remove('is-invalid'); // Опционально для красной рамки
+      element.classList.remove('is-invalid');
       return true;
     } else {
       if (errorElement) errorElement.classList.add('d-block');
-      element.classList.add('is-invalid'); // Опционально для красной рамки
+      element.classList.add('is-invalid');
       return false;
     }
   }

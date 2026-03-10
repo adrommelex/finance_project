@@ -28,8 +28,8 @@ export class AuthService {
     return result.response;
   }
 
-  // static async logOut(data) {
-  //   await HttpUtils.request('/logout', 'POST', false, data);
-  //
-  // }
+  static async logOut(data) {
+    await HttpUtils.request('/logout', 'POST', false, data);
+
+  }
 }

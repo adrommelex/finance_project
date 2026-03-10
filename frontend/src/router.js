@@ -13,6 +13,8 @@ import {AddIncome} from "./components/incomes/add-income";
 import {AddOutcome} from "./components/outcomes/add-outcome";
 import {ModifyOutcome} from "./components/outcomes/modify-outcome";
 import {ModifyIncome} from "./components/incomes/modify-income";
+import {AuthUtils} from "./utils/auth-utils";
+import {Logout} from "./components/auth/logout";
 
 export class Router {
   constructor() {
@@ -90,6 +92,12 @@ export class Router {
         styles: [
           'sign-in.css'
         ]
+      },
+      {
+        route: '/logout',
+        load: () => {
+          new Logout(this.openNewRouteBinded);
+        }
       },
       {
         route: '/incomes-outcomes',
@@ -349,10 +357,18 @@ export class Router {
           contentBlock = document.getElementById('content-layout');
 
           document.body.classList.add('sidebar-mini', 'layout-fixed');
-          this.profileNameElement = document.getElementById('profile-name') || document.querySelector('strong');
-          if (this.profileNameElement) {
-            this.profileNameElement.innerText = this.userName || 'Аноним';
+          this.profileNameElement = document.getElementById('profile-name');
+
+          if (!this.userName) {
+            let userInfo = AuthUtils.getAuthInfo(AuthUtils.userInfoTokenKey);
+            if (userInfo) {
+              userInfo = JSON.parse(userInfo);
+              if (userInfo.name) {
+                this.userName = userInfo.name;
+              }
+            }
           }
+          this.profileNameElement.innerText = this.userName;
           this.activateMenuItem(newRoute);
         } else {
           document.body.classList.remove('sidebar-mini', 'layout-fixed');
