@@ -311,6 +311,17 @@ export class Router {
   }
 
   async activateRoute(e, oldRoute = null) {
+    const urlRoute = window.location.pathname;
+    const publicRoutes = ['/login', '/signup'];
+    const accessToken = AuthUtils.getAuthInfo(AuthUtils.accessTokenKey);
+
+    if (!accessToken && !publicRoutes.includes(urlRoute)) {
+      console.warn('Пожалуйста, авторизуйтесь для доступа!');
+      await this.openNewRoute('/login');
+      return;
+    }
+
+
     if (oldRoute) {
       const currentRoute = this.routes.find((item) => item.route === oldRoute);
 
@@ -334,7 +345,6 @@ export class Router {
       }
     }
 
-    const urlRoute = window.location.pathname;
     const newRoute = this.routes.find((item) => item.route === urlRoute);
 
     if (newRoute) {

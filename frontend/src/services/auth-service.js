@@ -4,7 +4,6 @@ export class AuthService {
 
   static async logIn(data) {
     const result = await HttpUtils.request('/login', 'POST', false, data);
-    console.log(result.response)
 
     if (result.error || !result.response || !result.response.tokens || !result.response.user) {
       return false;
