@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   mode: 'development',
@@ -42,9 +43,12 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': JSON.stringify(process.env)
+    new Dotenv({
+      path: path.resolve(__dirname, '../.env')
     }),
+    /*new webpack.DefinePlugin({
+      'process.env': JSON.stringify(process.env)
+    }),*/
     new webpack.ProvidePlugin({
       bootstrap: 'bootstrap',
     }),

@@ -13,8 +13,8 @@ export class Login {
     this.findElements();
 
     this.validations = [
-      {element: this.passwordElement},
-      {element: this.emailElement, options: {pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/}},
+      {element: this.passwordElement, errorElement: document.getElementById('password-error')},
+      {element: this.emailElement, errorElement: document.getElementById('email-error'), options: {pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/}},
     ];
 
     document.getElementById('process-button').addEventListener('click', this.login.bind(this));
@@ -38,7 +38,7 @@ export class Login {
       });
 
       if (loginResult) {
-        AuthUtils.setAuthInfo(loginResult.accessToken, loginResult.refreshToken, {id: loginResult.id, name: loginResult.name});
+        AuthUtils.setAuthInfo(loginResult.tokens.accessToken, loginResult.tokens.refreshToken, {id: loginResult.user.id, name: loginResult.user.name});
 
         return this.openNewRoute('/');
       }

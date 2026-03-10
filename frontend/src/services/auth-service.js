@@ -4,8 +4,14 @@ export class AuthService {
 
   static async logIn(data) {
     const result = await HttpUtils.request('/login', 'POST', false, data);
+    console.log(result.response)
 
-    if (result.error || !result.response || (result.response && (!result.response.accessToken || !result.response.refreshToken || !result.response.id || !result.response.name))) {
+    if (result.error || !result.response || !result.response.tokens || !result.response.user) {
+      return false;
+    }
+
+    const { tokens, user } = result.response;
+    if (!tokens.accessToken || !tokens.refreshToken || !user.id || !user.name) {
       return false;
     }
 

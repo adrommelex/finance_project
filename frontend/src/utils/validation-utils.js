@@ -4,7 +4,7 @@ export class ValidationUtils {
     let isValid = true;
 
     for (let i = 0; i < validations.length; i++) {
-      if (!ValidationUtils.validateField(validations[i].element, validations[i].options)) {
+      if (!ValidationUtils.validateField(validations[i].element, validations[i].options, validations[i].errorElement)) {
         isValid = false;
       }
     }
@@ -12,7 +12,7 @@ export class ValidationUtils {
     return isValid;
   }
 
-  static validateField(element, options) {
+  static validateField(element, options, errorElement) {
     let condition = element.value;
     if (options) {
       if (options.hasOwnProperty('pattern')) {
@@ -27,10 +27,12 @@ export class ValidationUtils {
     }
 
     if (condition) {
-      element.classList.remove('d-block');
+      if (errorElement) errorElement.classList.remove('d-block');
+      element.classList.remove('is-invalid'); // Опционально для красной рамки
       return true;
     } else {
-      element.classList.add('d-block');
+      if (errorElement) errorElement.classList.add('d-block');
+      element.classList.add('is-invalid'); // Опционально для красной рамки
       return false;
     }
   }
