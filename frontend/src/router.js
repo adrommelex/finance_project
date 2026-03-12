@@ -83,7 +83,7 @@ export class Router {
         filePathTemplate: '/templates/pages/auth/signup.html',
         useLayout: false,
         load: () => {
-          document.body.classList.add('login-page');
+          document.body.classList.add('register-page');
           new Signup(this.openNewRouteBinded);
         },
         unload: () => {
