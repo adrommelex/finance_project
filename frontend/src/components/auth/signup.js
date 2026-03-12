@@ -30,6 +30,7 @@ export class Signup {
         options: {compareTo: null}
       },
     ];
+    ValidationUtils.initInputHandlers(this.validations, this.commonErrorElement);
 
     document.getElementById('process-button').addEventListener('click', this.signUp.bind(this));
   }

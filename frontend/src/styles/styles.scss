@@ -43,6 +43,12 @@ form .btn {
   font-size: 15px;
 }
 
+
+.input-group-custom.error {
+  border-color: red;
+  box-shadow: 0 0 0 0.25rem red;
+}
+
 .nav.nav-pills li,
 .btn.btn-toggle {
   font-size: 14px;

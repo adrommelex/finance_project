@@ -16,6 +16,7 @@ export class Login {
       {element: this.passwordElement, errorElement: document.getElementById('password-error')},
       {element: this.emailElement, errorElement: document.getElementById('email-error'), options: {pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/}},
     ];
+    ValidationUtils.initInputHandlers(this.validations, this.commonErrorElement);
 
     document.getElementById('process-button').addEventListener('click', this.login.bind(this));
   }
