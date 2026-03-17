@@ -12,8 +12,14 @@ export class Signup {
 
     this.findElements();
     this.validations = [
-      {element: this.nameElement, errorElement: document.getElementById('name-error')},
-      {element: this.lastNameElement, errorElement: document.getElementById('last-name-error')},
+      { element: this.nameElement,
+        errorElement: document.getElementById('name-error'),
+        options: {pattern: /^[А-Я][а-яё\s]*$/}
+      },
+      { element: this.lastNameElement,
+        errorElement: document.getElementById('last-name-error'),
+        options: {pattern: /^[А-Я][а-яё\s]*$/}
+      },
       {
         element: this.emailElement,
         errorElement: document.getElementById('email-error'),
