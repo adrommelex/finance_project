@@ -15,6 +15,7 @@ import {ModifyOutcome} from "./components/outcomes/modify-outcome";
 import {ModifyIncome} from "./components/incomes/modify-income";
 import {AuthUtils} from "./utils/auth-utils";
 import {Logout} from "./components/auth/logout";
+import {BalanceService} from "./services/balance-service";
 
 export class Router {
   constructor() {
@@ -379,6 +380,15 @@ export class Router {
             }
           }
           this.profileNameElement.innerText = this.userName;
+
+          const balanceElement = document.getElementById('balance-value');
+          if (balanceElement) {
+            const balance = await BalanceService.getBalance();
+            if (balance !== null && balance !== undefined) {
+              balanceElement.innerText = `${balance}$`;
+            }
+          }
+
           this.activateMenuItem(newRoute);
         } else {
           document.body.classList.remove('sidebar-mini', 'layout-fixed');
