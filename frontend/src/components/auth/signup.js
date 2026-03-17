@@ -14,26 +14,41 @@ export class Signup {
     this.validations = [
       { element: this.nameElement,
         errorElement: document.getElementById('name-error'),
-        options: {pattern: /^[А-Я][а-яё\s]*$/}
+        options: {
+          pattern: /^[А-Я][а-яё\s]*$/,
+          patternError: 'Имя должно быть на русском языке и начинаться с большой буквы'
+        }
       },
       { element: this.lastNameElement,
         errorElement: document.getElementById('last-name-error'),
-        options: {pattern: /^[А-Я][а-яё\s]*$/}
+        options: {
+          pattern: /^[А-Я][а-яё\s]*$/,
+          patternError: 'Фамилия должна быть на русском языке и начинаться с большой буквы'
+        }
       },
       {
         element: this.emailElement,
         errorElement: document.getElementById('email-error'),
-        options: {pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/}
+        options: {
+          pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+          patternError: 'Введите корректную электронную почту'
+        }
       },
       {
         element: this.passwordElement,
         errorElement: document.getElementById('password-error'),
-        options: {pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/}
+        options: {
+          pattern: /^(?=.*\d)(?=.*[A-Z]).{8,}$/,
+          patternError: 'Пароль должен содержать минимум 8 символов, заглавную букву и цифру'
+        }
       },
       {
         element: this.passwordRepeatElement,
         errorElement: document.getElementById('password-repeat-error'),
-        options: {compareTo: null}
+        options: {
+          compareTo: null,
+          patternError: 'Пароли не совпадают'
+        }
       },
     ];
     ValidationUtils.initInputHandlers(this.validations, this.commonErrorElement);
@@ -61,9 +76,9 @@ export class Signup {
 
     if (ValidationUtils.validateForm(this.validations)) {
       const signupData  = {
-        name: this.nameElement.value,
-        lastName: this.lastNameElement.value,
-        email: this.emailElement.value,
+        name: this.nameElement.value.trim(),
+        lastName: this.lastNameElement.value.trim(),
+        email: this.emailElement.value.trim(),
         password: this.passwordElement.value,
         passwordRepeat: this.passwordRepeatElement.value
       };
