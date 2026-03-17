@@ -14,6 +14,8 @@ export class ValidationUtils {
 
   static validateField(element, options, errorElement) {
     let condition = element.value;
+    const parentContainer = element.closest('.input-group-custom');
+
     if (options) {
       if (options.hasOwnProperty('pattern')) {
         condition = element.value && element.value.match(options.pattern);
@@ -28,12 +30,33 @@ export class ValidationUtils {
 
     if (condition) {
       if (errorElement) errorElement.classList.remove('d-block');
-      element.classList.remove('is-invalid'); // Опционально для красной рамки
+      element.classList.remove('is-invalid');
+      if (parentContainer) parentContainer.classList.remove('error');
       return true;
     } else {
       if (errorElement) errorElement.classList.add('d-block');
-      element.classList.add('is-invalid'); // Опционально для красной рамки
+      element.classList.add('is-invalid');
+      if (parentContainer) parentContainer.classList.add('error');
       return false;
     }
+  }
+
+  static initInputHandlers(validations, commonErrorElement = null) {
+    validations.forEach(item => {
+      item.element.addEventListener('input', () => {
+        item.element.classList.remove('is-invalid');
+
+        const parent = item.element.closest('.input-group-custom');
+        if (parent) parent.classList.remove('error');
+
+        if (item.errorElement) {
+          item.errorElement.classList.remove('d-block');
+        }
+
+        if (commonErrorElement) {
+          commonErrorElement.style.display = 'none';
+        }
+      });
+    });
   }
 }

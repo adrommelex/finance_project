@@ -16,6 +16,7 @@ export class Login {
       {element: this.passwordElement, errorElement: document.getElementById('password-error')},
       {element: this.emailElement, errorElement: document.getElementById('email-error'), options: {pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/}},
     ];
+    ValidationUtils.initInputHandlers(this.validations, this.commonErrorElement);
 
     document.getElementById('process-button').addEventListener('click', this.login.bind(this));
   }
@@ -24,13 +25,13 @@ export class Login {
     this.emailElement = document.getElementById('email');
     this.passwordElement = document.getElementById('password');
     this.rememberMeElement = document.getElementById('remember-me');
-    // this.commonErrorElement = document.getElementById('common-error');
+    this.commonErrorElement = document.getElementById('common-error');
   }
 
   async login() {
-    // this.commonErrorElement.style.display = 'none';
-    if (ValidationUtils.validateForm(this.validations)) {
+    this.commonErrorElement.style.display = 'none';
 
+    if (ValidationUtils.validateForm(this.validations)) {
       const loginResult = await AuthService.logIn({
         email: this.emailElement.value,
         password: this.passwordElement.value,
@@ -43,7 +44,7 @@ export class Login {
         return this.openNewRoute('/');
       }
 
-      // this.commonErrorElement.style.display = 'block';
+      this.commonErrorElement.style.display = 'block';
     }
   }
 }

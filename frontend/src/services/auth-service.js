@@ -4,7 +4,6 @@ export class AuthService {
 
   static async logIn(data) {
     const result = await HttpUtils.request('/login', 'POST', false, data);
-    console.log(result.response)
 
     if (result.error || !result.response || !result.response.tokens || !result.response.user) {
       return false;
@@ -21,15 +20,15 @@ export class AuthService {
   static async signUp(data) {
     const result = await HttpUtils.request('/signup', 'POST', false, data);
 
-    if (result.error || !result.response || (result.response && (!result.response.accessToken || !result.response.refreshToken || !result.response.id || !result.response.name))) {
+    if (result.error || !result.response || !result.response.user) {
       return false;
     }
 
     return result.response;
   }
 
-  // static async logOut(data) {
-  //   await HttpUtils.request('/logout', 'POST', false, data);
-  //
-  // }
+  static async logOut(data) {
+    await HttpUtils.request('/logout', 'POST', false, data);
+
+  }
 }
