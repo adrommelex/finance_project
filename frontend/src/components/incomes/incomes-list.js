@@ -1,44 +1,117 @@
+import { IncomesService } from "../../services/incomes-service";
+
 export class IncomesList {
   constructor(openNewRoute) {
     this.openNewRoute = openNewRoute;
-    this.cardIncomesElement = document.getElementById('incomes-cards-container');
-    this.confirmDeleteBtn = document.getElementById('delete-category');
-    this.deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+
+    this.categoryIdToDelete = null;
+    this.categoryElementToDelete = null;
+    this.deleteModal = null;
+
+    this.init();
+  }
+
+  async init() {
+    this.container = document.getElementById('incomes-cards-container');
+    this.addCardWrapper = document.getElementById('add-category-wrapper');
 
     this.initEvents();
+
+    await this.getCategories();
+  }
+
+  // 1. Получение данных через сервис
+  async getCategories() {
+    const response = await IncomesService.getCategories();
+
+    if (response.error) {
+      if (response.redirect) return this.openNewRoute(response.redirect);
+      return alert(response.error);
+    }
+
+    this.renderCards(response.categories);
+  }
+
+  // 2. Отрисовка карточек
+  renderCards(categories) {
+    if (!categories || !this.addCardWrapper) return;
+
+    categories.forEach(category => {
+      const cardHtml = `
+                <div class="card-wrapper col-12 col-lg-6 col-xxl-4" data-id="${category.id}">
+                  <div class="card border rounded-3 p-3 shadow-sm h-100">
+                    <div class="card-body p-0">
+                      <h3 class="card-title mb-3">${category.title}</h3>
+                      <div class="d-flex gap-2">
+                        <button class="btn btn-primary edit-btn">Редактировать</button>
+                        <button class="btn btn-danger delete-btn">Удалить</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>`;
+      this.addCardWrapper.insertAdjacentHTML('beforebegin', cardHtml);
+    });
   }
 
   initEvents() {
-    this.cardIncomesElement.addEventListener('click', (e) => {
-      const card = e.target.closest('.card-wrapper');
-      if (!card) return;
+    const modalElement = document.getElementById('deleteModal');
+    if (modalElement) {
+      this.deleteModal = new bootstrap.Modal(modalElement);
+    }
 
-      const deleteBtn = e.target.closest('.btn-danger');
-      const editBtn = e.target.closest('.btn-primary');
+    const confirmBtn = document.getElementById('delete-category');
+    if (confirmBtn) {
+      confirmBtn.onclick = async () => {
+        await this.deleteCategory();
+      };
+    }
 
-      if (deleteBtn) {
-        this.categoryToDelete = card;
-        this.deleteModal.show();
-      }
+    if (this.container) {
+      this.container.onclick = (e) => {
+        const card = e.target.closest('.card-wrapper');
+        if (!card || card.id === 'add-category-wrapper') return;
 
-      if (editBtn) {
+        const id = card.getAttribute('data-id');
         const title = card.querySelector('.card-title').textContent.trim();
-        this.openNewRoute.routerInstance.transferData = { name: title };
-        this.openNewRoute('/incomes-edit-category');
-      }
-    });
 
-    this.confirmDeleteBtn.addEventListener('click', () => {
-      this.deleteCategory();
-    });
+        if (e.target.closest('.edit-btn')) {
+          if (this.openNewRoute.routerInstance) {
+            this.openNewRoute.routerInstance.transferData = { id: id, title: title };
+          }
+          this.openNewRoute('/incomes-edit-category');
+        }
+
+        if (e.target.closest('.delete-btn')) {
+          this.categoryIdToDelete = id;
+          this.categoryElementToDelete = card;
+          if (this.deleteModal) {
+            this.deleteModal.show();
+          }
+        }
+      };
+    }
   }
 
-  deleteCategory() {
-    if (this.categoryToDelete) {
-      this.categoryToDelete.remove();
+  // 3. Удаление через сервис
+  async deleteCategory() {
+    if (!this.categoryIdToDelete) return;
 
-      this.deleteModal.hide();
-      this.categoryToDelete = null;
+    const response = await IncomesService.deleteCategory(this.categoryIdToDelete);
+
+    if (response.error) {
+      if (response.redirect) return this.openNewRoute(response.redirect);
+      alert(response.error);
+    } else {
+      if (this.categoryElementToDelete) {
+        this.categoryElementToDelete.remove();
+      }
     }
+
+    if (this.deleteModal) {
+      this.deleteModal.hide();
+    }
+
+    this.categoryIdToDelete = null;
+    this.categoryElementToDelete = null;
   }
 }
