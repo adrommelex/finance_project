@@ -1,19 +1,19 @@
-export class ModifyOutcome {
+export class ModifyExpense {
   constructor(openNewRoute) {
     this.openNewRoute = openNewRoute;
 
     const data = this.openNewRoute.routerInstance.transferData;
-    if (!data) return this.openNewRoute('/incomes-outcomes');
+    if (!data) return this.openNewRoute('/incomes-expenses');
     this.incomeData = data;
 
     this.init();
   }
 
   init() {
-    const typeSelect = document.getElementById('outcome-type');
-    const categorySelect = document.getElementById('outcome');
-    const amountInput = document.getElementById('outcome-sum');
-    const dateInput = document.getElementById('outcome-date');
+    const typeSelect = document.getElementById('expense-type');
+    const categorySelect = document.getElementById('expense');
+    const amountInput = document.getElementById('expense-sum');
+    const dateInput = document.getElementById('expense-date');
 
     const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 

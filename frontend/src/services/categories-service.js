@@ -1,13 +1,17 @@
 import {HttpUtils} from "../utils/http-utils";
 
-export class IncomesService {
+export class CategoriesService {
 
-  static async getCategories() {
+  static getTypeName(type) {
+    return type === 'income' ? 'доходов' : 'расходов';
+  }
+
+  static async getCategories(type) {
     const returnObject = { error: false, redirect: null, categories: null };
-    const result = await HttpUtils.request('/categories/income');
+    const result = await HttpUtils.request(`/categories/${type}`);
 
     if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
-      returnObject.error = 'Возникла ошибка при запросе категорий доходов.';
+      returnObject.error = `Возникла ошибка при запросе категорий ${this.getTypeName(type)}.`;
       if (result.redirect) returnObject.redirect = result.redirect;
       return returnObject;
     }
@@ -16,9 +20,9 @@ export class IncomesService {
     return returnObject;
   }
 
-  static async getCategory(id) {
+  static async getCategory(type, id) {
     const returnObject = { error: false, redirect: null, category: null };
-    const result = await HttpUtils.request('/categories/income/' + id);
+    const result = await HttpUtils.request(`/categories/${type}/${id}`);
 
     if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
       returnObject.error = 'Возникла ошибка при запросе категории.';
@@ -30,12 +34,12 @@ export class IncomesService {
     return returnObject;
   }
 
-  static async createCategory(title) {
+  static async createCategory(type, title) {
     const returnObject = { error: false, redirect: null, id: null };
-    const result = await HttpUtils.request('/categories/income', 'POST', true, { title });
+    const result = await HttpUtils.request(`/categories/${type}`, 'POST', true, { title });
 
     if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
-      returnObject.error = 'Возникла ошибка при создании категории.';
+      returnObject.error = `Возникла ошибка при создании категории ${this.getTypeName(type)}.`;
       if (result.redirect) returnObject.redirect = result.redirect;
       return returnObject;
     }
@@ -44,9 +48,9 @@ export class IncomesService {
     return returnObject;
   }
 
-  static async updateCategory(id, title) {
+  static async updateCategory(type, id, title) {
     const returnObject = { error: false, redirect: null };
-    const result = await HttpUtils.request('/categories/income/' + id, 'PUT', true, { title });
+    const result = await HttpUtils.request(`/categories/${type}/${id}`, 'PUT', true, { title });
 
     if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
       returnObject.error = 'Возникла ошибка при редактировании категории.';
@@ -57,9 +61,9 @@ export class IncomesService {
     return returnObject;
   }
 
-  static async deleteCategory(id) {
+  static async deleteCategory(type, id) {
     const returnObject = { error: false, redirect: null };
-    const result = await HttpUtils.request('/categories/income/' + id, 'DELETE', true);
+    const result = await HttpUtils.request(`/categories/${type}/${id}`, 'DELETE', true);
 
     if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
       returnObject.error = 'Возникла ошибка при удалении категории.';

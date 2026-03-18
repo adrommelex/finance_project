@@ -3,7 +3,7 @@ export class ModifyIncome {
     this.openNewRoute = openNewRoute;
 
     const data = this.openNewRoute.routerInstance.transferData;
-    if (!data) return this.openNewRoute('/incomes-outcomes');
+    if (!data) return this.openNewRoute('/incomes-expenses');
     this.incomeData = data;
 
     this.init();

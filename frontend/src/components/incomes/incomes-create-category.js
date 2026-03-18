@@ -1,4 +1,4 @@
-import { IncomesService } from "../../services/incomes-service";
+import { CategoriesService } from "../../services/categories-service";
 import { ValidationUtils } from "../../utils/validation-utils";
 
 export class IncomesCreateCategory {
@@ -34,7 +34,7 @@ export class IncomesCreateCategory {
 
         const title = this.inputElement.value.trim();
 
-        const response = await IncomesService.createCategory(title);
+        const response = await CategoriesService.createCategory('income', title);
 
         if (response.error) {
           if (response.redirect) return this.openNewRoute(response.redirect);

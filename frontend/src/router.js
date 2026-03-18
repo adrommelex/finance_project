@@ -2,16 +2,16 @@ import {Dashboard} from "./components/dashboard";
 import {FileUtils} from "./utils/file-utils";
 import {Login} from "./components/auth/login";
 import {Signup} from "./components/auth/signup";
-import {IncomesOutcomes} from "./components/incomes-outcomes";
+import {IncomesExpenses} from "./components/incomes-expenses";
 import {IncomesList} from "./components/incomes/incomes-list";
-import {OutcomesList} from "./components/outcomes/outcomes-list";
+import {ExpensesList} from "./components/expenses/expenses-list";
 import {IncomesCreateCategory} from "./components/incomes/incomes-create-category";
-import {OutcomesCreateCategory} from "./components/outcomes/outcomes-create-category";
+import {ExpensesCreateCategory} from "./components/expenses/expenses-create-category";
 import {IncomesEditCategory} from "./components/incomes/incomes-edit-category";
-import {OutcomesEditCategory} from "./components/outcomes/outcomes-edit-category";
+import {ExpensesEditCategory} from "./components/expenses/expenses-edit-category";
 import {AddIncome} from "./components/incomes/add-income";
-import {AddOutcome} from "./components/outcomes/add-outcome";
-import {ModifyOutcome} from "./components/outcomes/modify-outcome";
+import {AddExpense} from "./components/expenses/add-expense";
+import {ModifyExpense} from "./components/expenses/modify-expense";
 import {ModifyIncome} from "./components/incomes/modify-income";
 import {AuthUtils} from "./utils/auth-utils";
 import {Logout} from "./components/auth/logout";
@@ -24,7 +24,7 @@ export class Router {
     this.openNewRouteBinded.routerInstance = this;
 
     this.dashboardInstance = null;
-    this.incomesOutcomesInstance = null;
+    this.incomesExpensesInstance = null;
     this.titlePageElement = document.getElementById('title');
     this.contentPageElement = document.getElementById('content');
     this.bootstrapStyleElement = document.getElementById('bootstrap_style');
@@ -101,17 +101,17 @@ export class Router {
         }
       },
       {
-        route: '/incomes-outcomes',
+        route: '/incomes-expenses',
         title: 'Доходы и расходы',
-        filePathTemplate: '/templates/pages/incomes-outcomes.html',
+        filePathTemplate: '/templates/pages/incomes-expenses.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          this.incomesOutcomesInstance = new IncomesOutcomes(this.openNewRouteBinded);
+          this.incomesExpensesInstance = new IncomesExpenses(this.openNewRouteBinded);
         },
         unload: () => {
-          if (this.incomesOutcomesInstance && typeof this.incomesOutcomesInstance.destroy === 'function') {
-            this.incomesOutcomesInstance.destroy();
-            this.incomesOutcomesInstance = null;
+          if (this.incomesExpensesInstance && typeof this.incomesExpensesInstance.destroy === 'function') {
+            this.incomesExpensesInstance.destroy();
+            this.incomesExpensesInstance = null;
           }
         },
         scripts: [
@@ -138,12 +138,12 @@ export class Router {
         ],
       },
       {
-        route: '/outcomes',
+        route: '/expenses',
         title: 'Доходы и расходы',
-        filePathTemplate: '/templates/pages/outcomes/list.html',
+        filePathTemplate: '/templates/pages/expenses/list.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new OutcomesList(this.openNewRouteBinded);
+          new ExpensesList(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
@@ -168,12 +168,12 @@ export class Router {
         ],
       },
       {
-        route: '/outcomes-create-category',
+        route: '/expenses-create-category',
         title: 'Создание категории расходов',
-        filePathTemplate: '/templates/pages/outcomes/create-category.html',
+        filePathTemplate: '/templates/pages/expenses/create-category.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new OutcomesCreateCategory(this.openNewRouteBinded);
+          new ExpensesCreateCategory(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
@@ -198,12 +198,12 @@ export class Router {
         ],
       },
       {
-        route: '/outcomes-edit-category',
+        route: '/expenses-edit-category',
         title: 'Создание категории расходов',
-        filePathTemplate: '/templates/pages/outcomes/edit-category.html',
+        filePathTemplate: '/templates/pages/expenses/edit-category.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new OutcomesEditCategory(this.openNewRouteBinded);
+          new ExpensesEditCategory(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
@@ -228,12 +228,12 @@ export class Router {
         ],
       },
       {
-        route: '/add-outcome',
+        route: '/add-expense',
         title: 'Создание расхода',
-        filePathTemplate: '/templates/pages/outcomes/add-outcome.html',
+        filePathTemplate: '/templates/pages/expenses/add-expense.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new AddOutcome(this.openNewRouteBinded);
+          new AddExpense(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
@@ -243,12 +243,12 @@ export class Router {
         ],
       },
       {
-        route: '/modify-outcome',
+        route: '/modify-expense',
         title: 'Редактирование расхода',
-        filePathTemplate: '/templates/pages/outcomes/modify-outcome.html',
+        filePathTemplate: '/templates/pages/expenses/modify-expense.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new ModifyOutcome(this.openNewRouteBinded);
+          new ModifyExpense(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
@@ -370,16 +370,17 @@ export class Router {
           document.body.classList.add('sidebar-mini', 'layout-fixed');
           this.profileNameElement = document.getElementById('profile-name');
 
-          if (!this.userName) {
-            let userInfo = AuthUtils.getAuthInfo(AuthUtils.userInfoTokenKey);
-            if (userInfo) {
-              userInfo = JSON.parse(userInfo);
-              if (userInfo.name) {
-                this.userName = userInfo.name;
-              }
+          let userInfo = AuthUtils.getAuthInfo(AuthUtils.userInfoTokenKey);
+          if (userInfo) {
+            userInfo = JSON.parse(userInfo);
+            if (userInfo.name) {
+              this.userName = userInfo.name;
             }
           }
-          this.profileNameElement.innerText = this.userName;
+
+          if (this.profileNameElement) {
+            this.profileNameElement.innerText = this.userName || 'Аноним';
+          }
 
           const balanceElement = document.getElementById('balance-value');
           if (balanceElement) {
