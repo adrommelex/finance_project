@@ -254,7 +254,8 @@ export class Router {
           'sidebars.js'
         ],
         styles: [
-          'sidebars.css'
+          'sidebars.css',
+          'flatpickr.min.css'
         ],
       },
       {
@@ -269,7 +270,8 @@ export class Router {
           'sidebars.js'
         ],
         styles: [
-          'sidebars.css'
+          'sidebars.css',
+          'flatpickr.min.css'
         ],
       },
     ]
@@ -327,7 +329,7 @@ export class Router {
       const currentRoute = this.routes.find((item) => item.route === oldRoute);
 
       if (currentRoute) {
-        if (currentRoute.styles && currentRoute.styles.length > 0) {
+        if (currentRoute.styles) {
           currentRoute.styles.forEach(style => {
             const element = document.querySelector(`link[href='/css/${style}']`);
             if (element) element.remove();
@@ -349,12 +351,11 @@ export class Router {
     const newRoute = this.routes.find((item) => item.route === urlRoute);
 
     if (newRoute) {
-
       if (newRoute.title) {
         this.titlePageElement.innerText = newRoute.title;
       }
 
-      if (newRoute.styles && newRoute.styles.length > 0) {
+      if (newRoute.styles) {
         newRoute.styles.forEach(style => {
           FileUtils.loadPageStyle('/css/' + style, this.bootstrapStyleElement);
         });
@@ -364,10 +365,18 @@ export class Router {
         let contentBlock = this.contentPageElement;
 
         if (newRoute.useLayout) {
-          this.contentPageElement.innerHTML = await fetch(newRoute.useLayout).then(res => res.text());
-          contentBlock = document.getElementById('content-layout');
 
-          document.body.classList.add('sidebar-mini', 'layout-fixed');
+          let layoutContentBlock = document.getElementById('content-layout');
+
+          if (!layoutContentBlock) {
+            this.contentPageElement.innerHTML = await fetch(newRoute.useLayout).then(res => res.text());
+            layoutContentBlock = document.getElementById('content-layout');
+            document.body.classList.add('sidebar-mini', 'layout-fixed');
+          }
+
+          contentBlock = layoutContentBlock;
+
+
           this.profileNameElement = document.getElementById('profile-name');
 
           let userInfo = AuthUtils.getAuthInfo(AuthUtils.userInfoTokenKey);
@@ -384,10 +393,11 @@ export class Router {
 
           const balanceElement = document.getElementById('balance-value');
           if (balanceElement) {
-            const balance = await BalanceService.getBalance();
-            if (balance !== null && balance !== undefined) {
-              balanceElement.innerText = `${balance}$`;
-            }
+            BalanceService.getBalance().then(balance => {
+              if (balance !== null && balance !== undefined) {
+                balanceElement.innerText = `${balance}$`;
+              }
+            });
           }
 
           this.activateMenuItem(newRoute);
@@ -398,7 +408,7 @@ export class Router {
         contentBlock.innerHTML = await fetch(newRoute.filePathTemplate).then(res => res.text());
       }
 
-      if (newRoute.scripts && newRoute.scripts.length > 0) {
+      if (newRoute.scripts) {
         for (const script of newRoute.scripts) {
           await FileUtils.loadPageScript('/js/' + script);
         }

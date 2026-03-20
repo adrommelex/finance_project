@@ -7,12 +7,12 @@
   </div>
 
   <div class="d-flex align-items-center justify-content-center justify-content-lg-start flex-wrap gap-3">
-    <button class="btn btn-secondary active">Сегодня</button>
-    <button class="btn btn-outline-secondary">Неделя</button>
-    <button class="btn btn-outline-secondary">Месяц</button>
-    <button class="btn btn-outline-secondary">Год</button>
-    <button class="btn btn-outline-secondary">Все</button>
-    <button class="btn btn-outline-secondary">Интервал</button>
+    <button class="btn period-btn btn-secondary active" data-period="today">Сегодня</button>
+    <button class="btn period-btn btn-outline-secondary" data-period="week">Неделя</button>
+    <button class="btn period-btn btn-outline-secondary" data-period="month">Месяц</button>
+    <button class="btn period-btn btn-outline-secondary" data-period="year">Год</button>
+    <button class="btn period-btn btn-outline-secondary" data-period="all">Все</button>
+    <button class="btn period-btn btn-outline-secondary" data-period="interval">Интервал</button>
 
     <div class="d-flex align-items-center gap-2 ms-2 fs-6 fw-medium">
       <span>с</span>
@@ -35,31 +35,8 @@
         <th scope="col" class="text-end"></th>
       </tr>
       </thead>
-      <tbody>
-      <tr class="table-raw">
-        <th scope="row">1</th>
-        <td class="class-type text-success">доход</td>
-        <td>зарплата</td>
-        <td>500$</td>
-        <td>11.09.2022</td>
-        <td></td>
-        <td class="text-end">
-          <button class="btn btn-link link-dark p-0 me-2"><i class="bi bi-trash"></i></button>
-          <button class="btn btn-link link-dark p-0"><i class="bi bi-pencil"></i></button>
-        </td>
-      </tr>
-      <tr class="table-raw">
-        <th scope="row">2</th>
-        <td class="class-type text-danger">расход</td>
-        <td>жилье</td>
-        <td>2 500$</td>
-        <td>12.09.2022</td>
-        <td></td>
-        <td class="text-end">
-          <button class="btn btn-link link-dark p-0 me-2"><i class="bi bi-trash"></i></button>
-          <button class="btn btn-link link-dark p-0"><i class="bi bi-pencil"></i></button>
-        </td>
-      </tr>
+      <tbody id="operations-table-body">
+
       </tbody>
     </table>
   </div>

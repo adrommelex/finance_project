@@ -3,38 +3,35 @@
 
   <form class="create-category-form d-flex flex-column gap-2 col-lg-4">
     <div>
-      <input type="text"
-             class="form-control px-3 py-2"
-             id="expense-type"
-             placeholder="Тип...">
-    </div>
-    <div>
-      <input type="text"
-             class="form-control px-3 py-2"
-             id="expense"
-             placeholder="Категория...">
-    </div>
-    <div>
-      <input type="text"
-             class="form-control px-3 py-2"
-             id="expense-sum"
-             placeholder="Сумма в $...">
-    </div>
-    <div>
-      <input type="text"
-             class="form-control px-3 py-2"
-             id="expense-date"
-             placeholder="Дата...">
-    </div>
-    <div class="mb-3">
-      <input type="text"
-             class="form-control px-3 py-2"
-             id="expense-comment"
-             placeholder="Комментарий...">
+      <select class="form-select px-3 py-2 text-secondary" id="expense-type" disabled>
+        <option value="income">Доход</option>
+        <option value="expense">Расход</option>
+      </select>
     </div>
 
+    <div>
+      <select class="form-select px-3 py-2 text-secondary" id="expense-category-select">
+        <option value="" selected disabled>Категория...</option>
+      </select>
+    </div>
+
+    <div>
+      <input type="number" class="form-control px-3 py-2" id="expense-sum" placeholder="Сумма...">
+    </div>
+    <span id="amount-error" class="error invalid-feedback">Введите сумму</span>
+
+    <div>
+      <input type="text" class="form-control px-3 py-2" id="expense-date" placeholder="Дата...">
+    </div>
+    <span id="date-error" class="error invalid-feedback">Выберите дату</span>
+
+    <div class="mb-3">
+      <input type="text" class="form-control px-3 py-2" id="expense-comment" placeholder="Комментарий...">
+    </div>
+    <span id="comment-error" class="error invalid-feedback">Заполните комментарий</span>
+
     <div class="d-flex gap-2 my-4">
-      <button type="submit" class="btn btn-success" id="save-expense-button">Создать</button>
+      <button type="submit" class="btn btn-success" id="save-expense-button">Сохранить</button>
       <button type="button" class="btn btn-danger" id="dismiss-expense-button">Отмена</button>
     </div>
   </form>
