@@ -58,10 +58,10 @@ export class ModifyExpense {
     }
 
     this.validations = [
-      { element: this.categorySelect, errorElement: document.getElementById('category-error') },
-      { element: this.amountInput, errorElement: document.getElementById('amount-error') },
-      { element: this.dateInput, errorElement: document.getElementById('date-error') },
-      { element: this.commentInput, errorElement: document.getElementById('comment-error') }
+      { element: this.categorySelect, errorElement: document.getElementById('category-error'), options: { message: 'Выберите категорию' }},
+      { element: this.amountInput, errorElement: document.getElementById('amount-error'), options: { message: 'Введите сумму' }},
+      { element: this.dateInput, errorElement: document.getElementById('date-error'), options: { message: 'Выберите дату' }},
+      { element: this.commentInput, errorElement: document.getElementById('comment-error'), options: { message: 'Заполните комментарий' }}
     ];
 
     ValidationUtils.initInputHandlers(this.validations);

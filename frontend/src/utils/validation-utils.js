@@ -17,9 +17,9 @@ export class ValidationUtils {
     let isValid = true;
     let errorMessage = '';
 
-    if (!element.value) {
+    if (!element.value || element.value === "") {
       isValid = false;
-      errorMessage = 'Заполните поле';
+      errorMessage = (options && options.message) ? options.message : 'Заполните поле';
     }
 
     else if (options) {
