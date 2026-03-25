@@ -19,7 +19,6 @@ export class ExpensesEditCategory {
   init() {
     this.inputElement = document.getElementById('expenses-category-name');
     this.errorElement = document.getElementById('category-error');
-    this.saveBtn = document.getElementById('create-button');
     this.cancelBtn = document.getElementById('cancel-button');
 
     if (this.inputElement) {
@@ -36,8 +35,10 @@ export class ExpensesEditCategory {
   }
 
   initEvents() {
-    if (this.saveBtn) {
-      this.saveBtn.onclick = async (e) => {
+    this.formElement = document.querySelector('.create-category-form');
+
+    if (this.formElement) {
+      this.formElement.onsubmit = async (e) => {
         e.preventDefault();
 
         if (!ValidationUtils.validateForm(this.validations)) {

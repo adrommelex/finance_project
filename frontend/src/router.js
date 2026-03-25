@@ -23,11 +23,10 @@ export class Router {
     this.openNewRouteBinded = this.openNewRoute.bind(this);
     this.openNewRouteBinded.routerInstance = this;
 
-    this.dashboardInstance = null;
-    this.incomesExpensesInstance = null;
     this.titlePageElement = document.getElementById('title');
     this.contentPageElement = document.getElementById('content');
     this.bootstrapStyleElement = document.getElementById('bootstrap_style');
+    this.activeRouteComponent = null;
 
     this.userName = null;
 
@@ -40,13 +39,7 @@ export class Router {
         filePathTemplate: '/templates/pages/dashboard.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          this.dashboardInstance = new Dashboard(this.openNewRouteBinded);
-        },
-        unload: () => {
-          if (this.dashboardInstance && typeof this.dashboardInstance.destroy === 'function') {
-            this.dashboardInstance.destroy();
-            this.dashboardInstance = null;
-          }
+          return new Dashboard(this.openNewRouteBinded);
         },
         styles: [
           'sidebars.css',
@@ -57,19 +50,13 @@ export class Router {
         ],
       },
       {
-        route: '/404',
-        title: 'Страница не найдена',
-        filePathTemplate: '/templates/pages/404.html',
-        useLayout: false
-      },
-      {
         route: '/login',
         title: 'Авторизация',
         filePathTemplate: '/templates/pages/auth/login.html',
         useLayout: false,
         load: () => {
           document.body.classList.add('login-page');
-          new Login(this.openNewRouteBinded);
+          return new Login(this.openNewRouteBinded);
         },
         unload: () => {
           document.body.classList.remove('login-page');
@@ -85,7 +72,7 @@ export class Router {
         useLayout: false,
         load: () => {
           document.body.classList.add('register-page');
-          new Signup(this.openNewRouteBinded);
+          return new Signup(this.openNewRouteBinded);
         },
         unload: () => {
           document.body.classList.remove('register-page');
@@ -97,7 +84,7 @@ export class Router {
       {
         route: '/logout',
         load: () => {
-          new Logout(this.openNewRouteBinded);
+          return new Logout(this.openNewRouteBinded);
         }
       },
       {
@@ -106,13 +93,7 @@ export class Router {
         filePathTemplate: '/templates/pages/incomes-expenses.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          this.incomesExpensesInstance = new IncomesExpenses(this.openNewRouteBinded);
-        },
-        unload: () => {
-          if (this.incomesExpensesInstance && typeof this.incomesExpensesInstance.destroy === 'function') {
-            this.incomesExpensesInstance.destroy();
-            this.incomesExpensesInstance = null;
-          }
+          return new IncomesExpenses(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
@@ -128,7 +109,7 @@ export class Router {
         filePathTemplate: '/templates/pages/incomes/list.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new IncomesList(this.openNewRouteBinded);
+          return new IncomesList(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
@@ -143,7 +124,7 @@ export class Router {
         filePathTemplate: '/templates/pages/expenses/list.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new ExpensesList(this.openNewRouteBinded);
+          return new ExpensesList(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
@@ -158,7 +139,7 @@ export class Router {
         filePathTemplate: '/templates/pages/incomes/create-category.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new IncomesCreateCategory(this.openNewRouteBinded);
+          return new IncomesCreateCategory(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
@@ -173,7 +154,7 @@ export class Router {
         filePathTemplate: '/templates/pages/expenses/create-category.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new ExpensesCreateCategory(this.openNewRouteBinded);
+          return new ExpensesCreateCategory(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
@@ -188,7 +169,7 @@ export class Router {
         filePathTemplate: '/templates/pages/incomes/edit-category.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new IncomesEditCategory(this.openNewRouteBinded);
+          return new IncomesEditCategory(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
@@ -203,7 +184,7 @@ export class Router {
         filePathTemplate: '/templates/pages/expenses/edit-category.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new ExpensesEditCategory(this.openNewRouteBinded);
+          return new ExpensesEditCategory(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
@@ -218,13 +199,14 @@ export class Router {
         filePathTemplate: '/templates/pages/incomes/add-income.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new AddIncome(this.openNewRouteBinded);
+          return new AddIncome(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
         ],
         styles: [
-          'sidebars.css'
+          'sidebars.css',
+          'flatpickr.min.css'
         ],
       },
       {
@@ -233,13 +215,14 @@ export class Router {
         filePathTemplate: '/templates/pages/expenses/add-expense.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new AddExpense(this.openNewRouteBinded);
+          return new AddExpense(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
         ],
         styles: [
-          'sidebars.css'
+          'sidebars.css',
+          'flatpickr.min.css'
         ],
       },
       {
@@ -248,7 +231,7 @@ export class Router {
         filePathTemplate: '/templates/pages/expenses/modify-expense.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new ModifyExpense(this.openNewRouteBinded);
+          return new ModifyExpense(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
@@ -264,7 +247,7 @@ export class Router {
         filePathTemplate: '/templates/pages/incomes/modify-income.html',
         useLayout: '/templates/layout.html',
         load: () => {
-          new ModifyIncome(this.openNewRouteBinded);
+          return new ModifyIncome(this.openNewRouteBinded);
         },
         scripts: [
           'sidebars.js'
@@ -273,6 +256,12 @@ export class Router {
           'sidebars.css',
           'flatpickr.min.css'
         ],
+      },
+      {
+        route: '*',
+        title: 'Страница не найдена',
+        filePathTemplate: '/templates/pages/404.html',
+        useLayout: false
       },
     ]
   }
@@ -314,6 +303,12 @@ export class Router {
   }
 
   async activateRoute(e, oldRoute = null) {
+
+    if (this.activeRouteComponent && typeof this.activeRouteComponent.destroy === 'function') {
+      this.activeRouteComponent.destroy();
+      this.activeRouteComponent = null;
+    }
+
     const urlRoute = window.location.pathname;
     const publicRoutes = ['/login', '/signup'];
     const accessToken = AuthUtils.getAuthInfo(AuthUtils.accessTokenKey);
@@ -348,7 +343,11 @@ export class Router {
       }
     }
 
-    const newRoute = this.routes.find((item) => item.route === urlRoute);
+    let newRoute = this.routes.find((item) => item.route === urlRoute);
+
+    if (!newRoute) {
+      newRoute = this.routes.find((item) => item.route === '*');
+    }
 
     if (newRoute) {
       if (newRoute.title) {
@@ -365,7 +364,6 @@ export class Router {
         let contentBlock = this.contentPageElement;
 
         if (newRoute.useLayout) {
-
           let layoutContentBlock = document.getElementById('content-layout');
 
           if (!layoutContentBlock) {
@@ -375,7 +373,6 @@ export class Router {
           }
 
           contentBlock = layoutContentBlock;
-
 
           this.profileNameElement = document.getElementById('profile-name');
 
@@ -415,12 +412,9 @@ export class Router {
       }
 
       if (newRoute.load && typeof newRoute.load === 'function') {
-        newRoute.load();
+        this.activeRouteComponent = newRoute.load();
         this.transferData = null;
       }
-    } else {
-      console.error('Маршрут не найден:', urlRoute);
-      await this.openNewRoute('/404');
     }
   }
 

@@ -3,39 +3,35 @@
 
   <form class="create-category-form d-flex flex-column gap-2 col-lg-4">
     <div>
-      <input type="text"
-             class="form-control px-3 py-2"
-             id="category-type"
-             placeholder="Тип...">
+      <select class="form-select px-3 py-2 text-secondary" id="expense-type" disabled>
+        <option value="expense">Расход</option>
+      </select>
+    </div>
+
+    <div>
+      <select class="form-select px-3 py-2 text-secondary" id="expense-category-select">
+        <option value="" selected disabled>Категория...</option>
+      </select>
+      <span id="category-error" class="error invalid-feedback"></span>
     </div>
     <div>
-      <input type="text"
-             class="form-control px-3 py-2"
-             id="category"
-             placeholder="Категория...">
+      <input type="number" class="form-control px-3 py-2" id="expense-sum" placeholder="Сумма в $...">
     </div>
+    <span id="amount-error" class="error invalid-feedback"></span>
+
     <div>
-      <input type="text"
-             class="form-control px-3 py-2"
-             id="category-sum"
-             placeholder="Сумма в $...">
+      <input type="text" class="form-control px-3 py-2" id="expense-date" placeholder="Дата...">
     </div>
-    <div>
-      <input type="text"
-             class="form-control px-3 py-2"
-             id="category-date"
-             placeholder="Дата...">
-    </div>
+    <span id="date-error" class="error invalid-feedback"></span>
+
     <div class="mb-3">
-      <input type="text"
-             class="form-control px-3 py-2"
-             id="category-comment"
-             placeholder="Комментарий...">
+      <input type="text" class="form-control px-3 py-2" id="expense-comment" placeholder="Комментарий...">
     </div>
+    <span id="comment-error" class="error invalid-feedback"></span>
 
     <div class="d-flex gap-2 mt-4">
       <button type="submit" class="btn btn-success" id="create-expense-button">Создать</button>
-      <button type="button" class="btn btn-danger" id="cancel-expense-button">Отмена</button>
+      <button type="button" class="btn btn-danger" id="dismiss-expense-button">Отмена</button>
     </div>
   </form>
 </div>

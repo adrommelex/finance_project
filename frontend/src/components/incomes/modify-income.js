@@ -1,18 +1,19 @@
 import { OperationsService } from "../../services/operations-service";
 import { CategoriesService } from "../../services/categories-service";
 import { ValidationUtils } from "../../utils/validation-utils";
-import Flatpickr from "flatpickr";
 import { Russian } from "flatpickr/dist/l10n/ru.js";
+import flatpickr from "flatpickr";
 
 export class ModifyIncome {
   constructor(openNewRoute) {
     this.openNewRoute = openNewRoute;
+    this.fp = null;
 
     const data = this.openNewRoute.routerInstance.transferData;
     if (!data || !data.id) return this.openNewRoute('/incomes-expenses');
     this.operationId = data.id;
 
-    this.init();
+    this.init().then();
   }
 
   async init() {
@@ -24,9 +25,10 @@ export class ModifyIncome {
     this.saveBtn = document.getElementById('save-income-button');
     this.cancelBtn = document.getElementById('dismiss-income-button');
 
-    this.fp = Flatpickr(this.dateInput, {
+    this.fp = flatpickr(this.dateInput, {
       locale: Russian,
       dateFormat: "Y-m-d",
+      disableMobile: "true",
     });
 
     const categoriesResponse = await CategoriesService.getCategories('income');
@@ -98,5 +100,11 @@ export class ModifyIncome {
     this.cancelBtn.onclick = () => {
       this.openNewRoute('/incomes-expenses');
     };
+  }
+
+  destroy() {
+    if (this.fp) {
+      this.fp.destroy();
+    }
   }
 }

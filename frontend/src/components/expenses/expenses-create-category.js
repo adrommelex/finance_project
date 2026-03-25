@@ -8,9 +8,9 @@ export class ExpensesCreateCategory {
   }
 
   init() {
+    this.formElement = document.querySelector('.create-category-form');
     this.inputElement = document.getElementById('category-name');
     this.errorElement = document.getElementById('category-error');
-    this.createBtn = document.getElementById('create-button');
     this.cancelBtn = document.getElementById('cancel-button');
 
     this.validations = [
@@ -24,8 +24,8 @@ export class ExpensesCreateCategory {
 
   initEvents() {
 
-    if (this.createBtn) {
-      this.createBtn.onclick = async (e) => {
+    if (this.formElement) {
+      this.formElement.onsubmit = async (e) => {
         e.preventDefault();
 
         if (!ValidationUtils.validateForm(this.validations)) {
