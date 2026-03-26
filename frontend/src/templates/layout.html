@@ -16,26 +16,26 @@
     <hr>
     <ul class="nav nav-pills flex-column mt-5 px-3">
       <li class="nav-item">
-        <a href="/" class="nav-link active ps-3 pe-2" aria-current="page">
+        <a href="/" class="sidebar-link nav-link active ps-3 pe-2" aria-current="page">
           <i class="bi bi-house pe-none me-2"></i>
           Главная
         </a>
       </li>
       <li>
-        <a href="/incomes-expenses" class="nav-link link-dark ps-3 pe-2">
+        <a href="/incomes-expenses" class="sidebar-link nav-link link-dark ps-3 pe-2">
           <i class="bi bi-cash-coin"></i>
           Доходы & Расходы
         </a>
       </li>
       <li class="mb-1">
-        <button class="btn btn-toggle d-flex align-items-center justify-content-between w-100 ps-3 pe-2 rounded border-0"
+        <button class="btn btn-toggle d-flex align-items-center justify-content-between w-100 ps-3 pe-2 rounded-top rounded-bottom-0 border-0"
                 data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
           Категории
         </button>
         <div class="collapse show" id="home-collapse" style="">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="/incomes" class="link-dark d-inline-flex text-decoration-none rounded">Доходы</a></li>
-            <li><a href="/expenses" class="link-dark d-inline-flex text-decoration-none rounded">Расходы</a></li>
+            <li><a href="/incomes" class="sidebar-link link-dark d-block w-100 text-decoration-none">Доходы</a></li>
+            <li><a href="/expenses" class="sidebar-link link-dark d-block w-100 text-decoration-none rounded-bottom">Расходы</a></li>
           </ul>
         </div>
       </li>
@@ -79,7 +79,7 @@
         </h4>
 
         <div class="d-flex justify-content-center gap-3">
-          <button type="button" class="btn btn-success" id="delete-category">
+          <button type="button" class="btn btn-success" id="confirm-delete-button">
             Да, удалить
           </button>
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">

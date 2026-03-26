@@ -1,6 +1,7 @@
 import Flatpickr from 'flatpickr';
 import {Russian} from "flatpickr/dist/l10n/ru.js";
 import {OperationsService} from "../services/operations-service";
+import {BalanceService} from "../services/balance-service";
 
 export class IncomesExpenses {
   constructor(openNewRoute) {
@@ -13,7 +14,7 @@ export class IncomesExpenses {
     this.dateToElement = document.getElementById('date-to');
 
     this.tableBody = document.getElementById('operations-table-body');
-    this.confirmDeleteBtn = document.getElementById('delete-category');
+    this.confirmDeleteBtn = document.getElementById('confirm-delete-button');
     this.deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
 
     this.activePeriod = 'today';
@@ -122,6 +123,13 @@ export class IncomesExpenses {
       if (!result.error) {
         this.deleteModal.hide();
         await this.getOperations();
+
+        const balance = await BalanceService.getBalance();
+        const balanceElement = document.getElementById('balance-value');
+
+        if (balance !== null && balanceElement) {
+          balanceElement.innerText = `${balance}$`;
+        }
       } else {
         alert(result.error);
       }

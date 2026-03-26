@@ -59,7 +59,7 @@ export class IncomesList {
       this.deleteModal = new bootstrap.Modal(modalElement);
     }
 
-    const confirmBtn = document.getElementById('delete-category');
+    const confirmBtn = document.getElementById('confirm-delete-button');
     if (confirmBtn) {
       confirmBtn.onclick = async () => {
         await this.deleteCategory();

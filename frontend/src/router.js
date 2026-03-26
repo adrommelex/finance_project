@@ -419,13 +419,38 @@ export class Router {
   }
 
   activateMenuItem(route) {
-    document.querySelectorAll('.sidebar .nav-link').forEach(item => {
+    const currentPath = window.location.pathname;
+
+    document.querySelectorAll('.sidebar-link').forEach(item => {
       const href = item.getAttribute('href');
-      if ((route.route.includes(href) && href !== '/') || (route.route === '/' && href === '/')) {
-        item.classList.add('active');
+      const isActive = (href === currentPath) ||
+        (href !== '/' && currentPath.startsWith(href) && currentPath.length > href.length && currentPath[href.length] === '/');
+
+      if (isActive) {
+        item.classList.add('active', 'bg-primary', 'text-white');
+        item.classList.remove('link-dark');
       } else {
-        item.classList.remove('active');
+        item.classList.remove('active', 'bg-primary', 'text-white');
+        item.classList.add('link-dark');
+        item.blur();
       }
     });
+
+    const categoriesBtn = document.querySelector('[data-bs-target="#home-collapse"]');
+    const isCategoryChild = (currentPath.startsWith('/incomes') || currentPath.startsWith('/expenses'))
+      && currentPath !== '/incomes-expenses';
+
+    if (categoriesBtn) {
+      if (isCategoryChild) {
+        categoriesBtn.classList.add('active', 'bg-primary', 'text-white');
+        categoriesBtn.classList.remove('link-dark');
+
+        const collapse = document.getElementById('home-collapse');
+        if (collapse) collapse.classList.add('show');
+      } else {
+        categoriesBtn.classList.remove('active', 'bg-primary', 'text-white');
+        categoriesBtn.classList.add('link-dark');
+      }
+    }
   }
 }
