@@ -19,7 +19,6 @@ export class ExpensesList {
     await this.getCategories();
   }
 
-  // 1. Получение данных через сервис
   async getCategories() {
     const response = await CategoriesService.getCategories('expense');
 
@@ -31,7 +30,6 @@ export class ExpensesList {
     this.renderCards(response.categories);
   }
 
-  // 2. Отрисовка карточек
   renderCards(categories) {
     if (!categories || !this.addCardWrapper) return;
 
@@ -91,7 +89,6 @@ export class ExpensesList {
     }
   }
 
-  // 3. Удаление через сервис
   async deleteCategory() {
     if (!this.categoryIdToDelete) return;
 

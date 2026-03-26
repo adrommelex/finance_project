@@ -62,7 +62,6 @@ export class Dashboard {
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
 
-    // Уничтожаем старый график, если он есть
     if (canvasId === 'incomeChart' && this.incomeChart) this.incomeChart.destroy();
     if (canvasId === 'expensesChart' && this.expensesChart) this.expensesChart.destroy();
 
@@ -102,7 +101,7 @@ export class Dashboard {
 
     Object.keys(chartData).forEach((categoryName, index) => {
       const amount = chartData[categoryName];
-      const color = this.chartColors[index % this.chartColors.length]; // Зацикливаем цвета, если категорий больше
+      const color = this.chartColors[index % this.chartColors.length];
 
       const legendItem = document.createElement('div');
       legendItem.className = 'legend-item d-flex align-items-center';

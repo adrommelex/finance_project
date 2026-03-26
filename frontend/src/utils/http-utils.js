@@ -2,7 +2,10 @@ import {AuthUtils} from "./auth-utils";
 import config from "../config/config";
 
 export class HttpUtils {
+  static refreshPromise = null;
+
   static async request(url, method = "GET", useAuth = true, body = null) {
+
     const result = {
       error: false,
       response: null
@@ -15,12 +18,9 @@ export class HttpUtils {
         'Accept': 'application/json'
       },
     };
-    let token = null;
-    if (useAuth) {
-      token = AuthUtils.getAuthInfo(AuthUtils.accessTokenKey);
-      if (token) {
-        params.headers['x-auth-token'] = token;
-      }
+    let token = useAuth ? AuthUtils.getAuthInfo(AuthUtils.accessTokenKey) : null;
+    if (token) {
+      params.headers['x-auth-token'] = token;
     }
 
     if (body) {
@@ -28,18 +28,25 @@ export class HttpUtils {
     }
 
     try {
-      const response = await fetch(config.api + url, params);
+      let response = await fetch(config.api + url, params);
 
       if (response.status === 401 && useAuth) {
         if (!token) {
           return { error: true, redirect: '/login' };
+        }
+
+        if (!this.refreshPromise) {
+          this.refreshPromise = AuthUtils.updateRefreshToken();
+        }
+
+        const updateTokenResult = await this.refreshPromise;
+
+        this.refreshPromise = null;
+
+        if (updateTokenResult) {
+          return await this.request(url, method, useAuth, body);
         } else {
-          const updateTokenResult = await AuthUtils.updateRefreshToken();
-          if (updateTokenResult) {
-            return await this.request(url, method, useAuth, body);
-          } else {
-            return { error: true, redirect: '/login' };
-          }
+          return { error: true, redirect: '/login' };
         }
       }
 

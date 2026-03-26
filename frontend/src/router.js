@@ -45,9 +45,6 @@ export class Router {
           'sidebars.css',
           'flatpickr.min.css'
         ],
-        scripts: [
-          'sidebars.js'
-        ],
       },
       {
         route: '/login',
@@ -90,14 +87,12 @@ export class Router {
       {
         route: '/incomes-expenses',
         title: 'Доходы и расходы',
+        deleteModalText: 'Вы действительно хотите удалить операцию?',
         filePathTemplate: '/templates/pages/incomes-expenses.html',
         useLayout: '/templates/layout.html',
         load: () => {
           return new IncomesExpenses(this.openNewRouteBinded);
         },
-        scripts: [
-          'sidebars.js'
-        ],
         styles: [
           'sidebars.css',
           'flatpickr.min.css'
@@ -106,14 +101,12 @@ export class Router {
       {
         route: '/incomes',
         title: 'Доходы и расходы',
+        deleteModalText: 'Вы действительно хотите удалить категорию? Связанные доходы останутся без категории.',
         filePathTemplate: '/templates/pages/incomes/list.html',
         useLayout: '/templates/layout.html',
         load: () => {
           return new IncomesList(this.openNewRouteBinded);
         },
-        scripts: [
-          'sidebars.js'
-        ],
         styles: [
           'sidebars.css'
         ],
@@ -121,14 +114,12 @@ export class Router {
       {
         route: '/expenses',
         title: 'Доходы и расходы',
+        deleteModalText: 'Вы действительно хотите удалить категорию?',
         filePathTemplate: '/templates/pages/expenses/list.html',
         useLayout: '/templates/layout.html',
         load: () => {
           return new ExpensesList(this.openNewRouteBinded);
         },
-        scripts: [
-          'sidebars.js'
-        ],
         styles: [
           'sidebars.css'
         ],
@@ -141,9 +132,6 @@ export class Router {
         load: () => {
           return new IncomesCreateCategory(this.openNewRouteBinded);
         },
-        scripts: [
-          'sidebars.js'
-        ],
         styles: [
           'sidebars.css'
         ],
@@ -156,9 +144,6 @@ export class Router {
         load: () => {
           return new ExpensesCreateCategory(this.openNewRouteBinded);
         },
-        scripts: [
-          'sidebars.js'
-        ],
         styles: [
           'sidebars.css'
         ],
@@ -171,9 +156,6 @@ export class Router {
         load: () => {
           return new IncomesEditCategory(this.openNewRouteBinded);
         },
-        scripts: [
-          'sidebars.js'
-        ],
         styles: [
           'sidebars.css'
         ],
@@ -186,9 +168,6 @@ export class Router {
         load: () => {
           return new ExpensesEditCategory(this.openNewRouteBinded);
         },
-        scripts: [
-          'sidebars.js'
-        ],
         styles: [
           'sidebars.css'
         ],
@@ -201,9 +180,6 @@ export class Router {
         load: () => {
           return new AddIncome(this.openNewRouteBinded);
         },
-        scripts: [
-          'sidebars.js'
-        ],
         styles: [
           'sidebars.css',
           'flatpickr.min.css'
@@ -217,9 +193,6 @@ export class Router {
         load: () => {
           return new AddExpense(this.openNewRouteBinded);
         },
-        scripts: [
-          'sidebars.js'
-        ],
         styles: [
           'sidebars.css',
           'flatpickr.min.css'
@@ -233,9 +206,6 @@ export class Router {
         load: () => {
           return new ModifyExpense(this.openNewRouteBinded);
         },
-        scripts: [
-          'sidebars.js'
-        ],
         styles: [
           'sidebars.css',
           'flatpickr.min.css'
@@ -249,9 +219,6 @@ export class Router {
         load: () => {
           return new ModifyIncome(this.openNewRouteBinded);
         },
-        scripts: [
-          'sidebars.js'
-        ],
         styles: [
           'sidebars.css',
           'flatpickr.min.css'
@@ -354,6 +321,11 @@ export class Router {
         this.titlePageElement.innerText = newRoute.title;
       }
 
+      const modalTextElement = document.getElementById('modal-text');
+      if (modalTextElement) {
+        modalTextElement.innerText = newRoute.deleteModalText || '';
+      }
+
       if (newRoute.styles) {
         newRoute.styles.forEach(style => {
           FileUtils.loadPageStyle('/css/' + style, this.bootstrapStyleElement);
@@ -397,7 +369,7 @@ export class Router {
             });
           }
 
-          this.activateMenuItem(newRoute);
+          this.activateMenuItem();
         } else {
           document.body.classList.remove('sidebar-mini', 'layout-fixed');
         }
@@ -418,7 +390,7 @@ export class Router {
     }
   }
 
-  activateMenuItem(route) {
+  activateMenuItem() {
     const currentPath = window.location.pathname;
 
     document.querySelectorAll('.sidebar-link').forEach(item => {
@@ -450,6 +422,16 @@ export class Router {
       } else {
         categoriesBtn.classList.remove('active', 'bg-primary', 'text-white');
         categoriesBtn.classList.add('link-dark');
+      }
+    }
+
+    const sidebarMenu = document.getElementById('sidebarMenu');
+
+    if (sidebarMenu && window.innerWidth < 992) {
+      const bsOffcanvas = bootstrap.Offcanvas.getInstance(sidebarMenu);
+
+      if (bsOffcanvas) {
+        bsOffcanvas.hide();
       }
     }
   }
