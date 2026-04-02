@@ -1,29 +1,24 @@
 import { OperationsService } from "../../services/operations-service";
 import { CategoriesService } from "../../services/categories-service";
 import { ValidationUtils } from "../../utils/validation-utils";
-import { Russian } from "flatpickr/dist/l10n/ru.js";
 import flatpickr from "flatpickr";
+import { Russian } from "flatpickr/dist/l10n/ru.js";
 
-export class ModifyIncome {
+export class AddExpense {
   constructor(openNewRoute) {
     this.openNewRoute = openNewRoute;
     this.fp = null;
-
-    const data = this.openNewRoute.routerInstance.transferData;
-    if (!data || !data.id) return this.openNewRoute('/incomes-expenses');
-    this.operationId = data.id;
 
     this.init().then();
   }
 
   async init() {
-    this.typeSelect = document.getElementById('income-type');
-    this.categorySelect = document.getElementById('income-category-select');
-    this.amountInput = document.getElementById('income-sum');
-    this.dateInput = document.getElementById('income-date');
-    this.commentInput = document.getElementById('income-comment');
-    this.saveBtn = document.getElementById('save-income-button');
-    this.cancelBtn = document.getElementById('dismiss-income-button');
+    this.categorySelect = document.getElementById('expense-category-select');
+    this.amountInput = document.getElementById('expense-sum');
+    this.dateInput = document.getElementById('expense-date');
+    this.commentInput = document.getElementById('expense-comment');
+    this.saveBtn = document.getElementById('create-expense-button');
+    this.cancelBtn = document.getElementById('dismiss-expense-button');
 
     this.fp = flatpickr(this.dateInput, {
       locale: Russian,
@@ -31,32 +26,15 @@ export class ModifyIncome {
       disableMobile: "true",
     });
 
-    const categoriesResponse = await CategoriesService.getCategories('income');
+    const categoriesResponse = await CategoriesService.getCategories('expense');
     if (categoriesResponse.categories) {
-      this.categorySelect.innerHTML = '<option value="">Категория...</option>';
+      this.categorySelect.innerHTML = '<option value="" selected disabled>Категория...</option>';
       categoriesResponse.categories.forEach(category => {
         const option = document.createElement('option');
         option.value = category.id;
         option.innerText = category.title;
         this.categorySelect.appendChild(option);
       });
-    }
-
-    const operationResponse = await OperationsService.getOperation(this.operationId);
-    if (operationResponse.operation) {
-      const op = operationResponse.operation;
-
-      if (this.typeSelect) this.typeSelect.value = op.type;
-      if (this.amountInput) this.amountInput.value = op.amount;
-      if (this.commentInput) this.commentInput.value = op.comment || '';
-
-      if (this.fp) this.fp.setDate(op.date);
-
-      const currentCategory = Array.from(this.categorySelect.options)
-        .find(opt => opt.innerText === op.category);
-      if (currentCategory) {
-        this.categorySelect.value = currentCategory.value;
-      }
     }
 
     this.validations = [
@@ -79,15 +57,15 @@ export class ModifyIncome {
         return;
       }
 
-      const updateData = {
-        type: 'income',
+      const createData = {
+        type: 'expense',
         amount: parseInt(this.amountInput.value),
         date: this.dateInput.value,
         comment: this.commentInput.value,
         category_id: parseInt(this.categorySelect.value)
       };
 
-      const result = await OperationsService.updateOperation(this.operationId, updateData);
+      const result = await OperationsService.createOperation(createData);
 
       if (result.error) {
         if (result.redirect) return this.openNewRoute(result.redirect);
@@ -95,7 +73,7 @@ export class ModifyIncome {
       } else {
         this.openNewRoute('/incomes-expenses');
       }
-    };
+    }
 
     this.cancelBtn.onclick = () => {
       this.openNewRoute('/incomes-expenses');

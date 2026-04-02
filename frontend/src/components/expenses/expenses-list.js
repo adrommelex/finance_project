@@ -1,6 +1,6 @@
 import { CategoriesService } from "../../services/categories-service";
 
-export class IncomesList {
+export class ExpensesList {
   constructor(openNewRoute) {
     this.openNewRoute = openNewRoute;
 
@@ -12,16 +12,15 @@ export class IncomesList {
   }
 
   async init() {
-    this.container = document.getElementById('incomes-cards-container');
+    this.container = document.getElementById('expenses-cards-container');
     this.addCardWrapper = document.getElementById('add-category-wrapper');
 
     this.initEvents();
-
     await this.getCategories();
   }
 
   async getCategories() {
-    const response = await CategoriesService.getCategories('income');
+    const response = await CategoriesService.getCategories('expense');
 
     if (response.error) {
       if (response.redirect) return this.openNewRoute(response.redirect);
@@ -76,7 +75,7 @@ export class IncomesList {
           if (this.openNewRoute.routerInstance) {
             this.openNewRoute.routerInstance.transferData = { id: id, title: title };
           }
-          this.openNewRoute('/incomes-edit-category');
+          this.openNewRoute('/expenses-edit-category');
         }
 
         if (e.target.closest('.delete-btn')) {
@@ -93,7 +92,7 @@ export class IncomesList {
   async deleteCategory() {
     if (!this.categoryIdToDelete) return;
 
-    const response = await CategoriesService.deleteCategory('income', this.categoryIdToDelete);
+    const response = await CategoriesService.deleteCategory('expense', this.categoryIdToDelete);
 
     if (response.error) {
       if (response.redirect) return this.openNewRoute(response.redirect);

@@ -46,9 +46,7 @@ module.exports = {
     new Dotenv({
       path: path.resolve(__dirname, '../.env')
     }),
-    /*new webpack.DefinePlugin({
-      'process.env': JSON.stringify(process.env)
-    }),*/
+
     new webpack.ProvidePlugin({
       bootstrap: 'bootstrap',
     }),
@@ -67,7 +65,6 @@ module.exports = {
         {from: "./node_modules/flatpickr/dist/flatpickr.min.css", to: "css"},
         {from: "./src/styles/sidebars.css", to: "css"},
         {from: "./src/styles/sign-in.css", to: "css"},
-        {from: "./src/utils/sidebars.js", to: "js"},
         {from: "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js", to: "js"},
       ],
     }),

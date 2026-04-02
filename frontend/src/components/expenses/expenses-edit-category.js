@@ -1,12 +1,12 @@
 import { CategoriesService } from "../../services/categories-service";
 import { ValidationUtils } from "../../utils/validation-utils";
 
-export class IncomesEditCategory {
+export class ExpensesEditCategory {
   constructor(openNewRoute) {
     this.openNewRoute = openNewRoute;
     const data = this.openNewRoute.routerInstance.transferData;
     if (!data || !data.id) {
-      this.openNewRoute('/incomes');
+      this.openNewRoute('/expenses');
       return;
     }
 
@@ -17,7 +17,7 @@ export class IncomesEditCategory {
   }
 
   init() {
-    this.inputElement = document.getElementById('incomes-category-name');
+    this.inputElement = document.getElementById('expenses-category-name');
     this.errorElement = document.getElementById('category-error');
     this.cancelBtn = document.getElementById('cancel-button');
 
@@ -36,6 +36,7 @@ export class IncomesEditCategory {
 
   initEvents() {
     this.formElement = document.querySelector('.create-category-form');
+
     if (this.formElement) {
       this.formElement.onsubmit = async (e) => {
         e.preventDefault();
@@ -47,10 +48,10 @@ export class IncomesEditCategory {
         const newTitle = this.inputElement.value.trim();
 
         if (newTitle === this.initialTitle) {
-          return this.openNewRoute('/incomes');
+          return this.openNewRoute('/expenses');
         }
 
-        const response = await CategoriesService.updateCategory('income', this.categoryId, newTitle);
+        const response = await CategoriesService.updateCategory('expense', this.categoryId, newTitle);
 
         if (response.error) {
           if (response.redirect) return this.openNewRoute(response.redirect);
@@ -59,13 +60,13 @@ export class IncomesEditCategory {
           return;
         }
 
-        this.openNewRoute('/incomes');
+        this.openNewRoute('/expenses');
       };
     }
 
     if (this.cancelBtn) {
       this.cancelBtn.onclick = () => {
-        this.openNewRoute('/incomes');
+        this.openNewRoute('/expenses');
       };
     }
   }

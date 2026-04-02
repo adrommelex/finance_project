@@ -13,12 +13,15 @@ export class Logout {
   }
 
   async logout() {
-    await AuthService.logOut({
-      refreshToken: AuthUtils.getAuthInfo(AuthUtils.refreshTokenKey),
-    });
-
-    AuthUtils.removeAuthInfo();
-
-    this.openNewRoute('/login');
+    try {
+      await AuthService.logOut({
+        refreshToken: AuthUtils.getAuthInfo(AuthUtils.refreshTokenKey),
+      });
+    } catch (e) {
+      console.error('Ошибка сети', e);
+    } finally {
+      AuthUtils.removeAuthInfo();
+      this.openNewRoute('/login');
+    }
   }
 }

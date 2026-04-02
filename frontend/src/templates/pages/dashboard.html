@@ -2,12 +2,12 @@
   <h1 class="page-header my-5 text-center text-md-start">Главная</h1>
 
   <div class="d-flex align-items-center justify-content-center justify-content-md-start flex-wrap gap-3">
-    <button class="btn btn-secondary active">Сегодня</button>
-    <button class="btn btn-outline-secondary">Неделя</button>
-    <button class="btn btn-outline-secondary">Месяц</button>
-    <button class="btn btn-outline-secondary">Год</button>
-    <button class="btn btn-outline-secondary">Все</button>
-    <button class="btn btn-outline-secondary">Интервал</button>
+    <button class="btn period-btn btn-secondary active" data-period="today">Сегодня</button>
+    <button class="btn period-btn btn-outline-secondary" data-period="week">Неделя</button>
+    <button class="btn period-btn btn-outline-secondary" data-period="month">Месяц</button>
+    <button class="btn period-btn btn-outline-secondary" data-period="year">Год</button>
+    <button class="btn period-btn btn-outline-secondary" data-period="all">Все</button>
+    <button class="btn period-btn btn-outline-secondary" data-period="interval">Интервал</button>
 
     <div class="d-flex align-items-center gap-2 ms-md-2 fs-6 fw-medium">
       <span>с</span>
@@ -23,30 +23,9 @@
       <div class="chart d-flex flex-column align-items-center">
         <h3 class="mb-3">Доходы</h3>
 
-        <div class="d-flex justify-content-between w-100 mb-5">
-          <div class="legend-item d-flex align-items-center">
-            <span class="legend-color-box" style="background-color: #dc3545;"></span>
-            <span class="mx-2 small">Red</span>
-          </div>
-          <div class="legend-item d-flex align-items-center">
-            <span class="legend-color-box" style="background-color: #fd7e14;"></span>
-            <span class="mx-2 small">Orange</span>
-          </div>
-          <div class="legend-item d-flex align-items-center">
-            <span class="legend-color-box" style="background-color: #ffc107;"></span>
-            <span class="mx-2 small">Yellow</span>
-          </div>
-          <div class="legend-item d-flex align-items-center">
-            <span class="legend-color-box" style="background-color: #20c997;"></span>
-            <span class="mx-2 small">Green</span>
-          </div>
-          <div class="legend-item d-flex align-items-center">
-            <span class="legend-color-box" style="background-color: #0d6efd;"></span>
-            <span class="mx-2 small">Blue</span>
-          </div>
-        </div>
+        <div id="income-legend" class="d-flex justify-content-center flex-wrap gap-3 w-100 mb-5"></div>
 
-        <div class="income-chart mb-5">
+        <div class="income-chart mb-5 mt-auto">
           <canvas id="incomeChart"></canvas>
         </div>
       </div>
@@ -56,30 +35,10 @@
     <div class="col-md-6 d-flex justify-content-center text-center">
       <div class="chart d-flex flex-column align-items-center">
         <h3 class="mb-3">Расходы</h3>
-        <div class="d-flex justify-content-between w-100 mb-5">
-          <div class="legend-item d-flex align-items-center">
-            <span class="legend-color-box" style="background-color: #dc3545;"></span>
-            <span class="mx-2 small">Red</span>
-          </div>
-          <div class="legend-item d-flex align-items-center">
-            <span class="legend-color-box" style="background-color: #fd7e14;"></span>
-            <span class="mx-2 small">Orange</span>
-          </div>
-          <div class="legend-item d-flex align-items-center">
-            <span class="legend-color-box" style="background-color: #ffc107;"></span>
-            <span class="mx-2 small">Yellow</span>
-          </div>
-          <div class="legend-item d-flex align-items-center">
-            <span class="legend-color-box" style="background-color: #20c997;"></span>
-            <span class="mx-2 small">Green</span>
-          </div>
-          <div class="legend-item d-flex align-items-center">
-            <span class="legend-color-box" style="background-color: #0d6efd;"></span>
-            <span class="mx-2 small">Blue</span>
-          </div>
-        </div>
 
-        <div class="expenses-chart mb-5">
+        <div id="expenses-legend" class="d-flex justify-content-center flex-wrap gap-3 w-100 mb-5"></div>
+
+        <div class="expenses-chart mb-5 mt-auto">
           <canvas id="expensesChart"></canvas>
         </div>
       </div>

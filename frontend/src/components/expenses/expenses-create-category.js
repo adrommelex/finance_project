@@ -1,29 +1,17 @@
 import { CategoriesService } from "../../services/categories-service";
 import { ValidationUtils } from "../../utils/validation-utils";
 
-export class IncomesEditCategory {
+export class ExpensesCreateCategory {
   constructor(openNewRoute) {
     this.openNewRoute = openNewRoute;
-    const data = this.openNewRoute.routerInstance.transferData;
-    if (!data || !data.id) {
-      this.openNewRoute('/incomes');
-      return;
-    }
-
-    this.categoryId = data.id;
-    this.initialTitle = data.title;
-
     this.init();
   }
 
   init() {
-    this.inputElement = document.getElementById('incomes-category-name');
+    this.formElement = document.querySelector('.create-category-form');
+    this.inputElement = document.getElementById('category-name');
     this.errorElement = document.getElementById('category-error');
     this.cancelBtn = document.getElementById('cancel-button');
-
-    if (this.inputElement) {
-      this.inputElement.value = this.initialTitle;
-    }
 
     this.validations = [
       { element: this.inputElement, errorElement: this.errorElement }
@@ -35,7 +23,7 @@ export class IncomesEditCategory {
   }
 
   initEvents() {
-    this.formElement = document.querySelector('.create-category-form');
+
     if (this.formElement) {
       this.formElement.onsubmit = async (e) => {
         e.preventDefault();
@@ -44,28 +32,25 @@ export class IncomesEditCategory {
           return;
         }
 
-        const newTitle = this.inputElement.value.trim();
+        const title = this.inputElement.value.trim();
 
-        if (newTitle === this.initialTitle) {
-          return this.openNewRoute('/incomes');
-        }
-
-        const response = await CategoriesService.updateCategory('income', this.categoryId, newTitle);
+        const response = await CategoriesService.createCategory('expense', title);
 
         if (response.error) {
           if (response.redirect) return this.openNewRoute(response.redirect);
-          ValidationUtils.validateField(this.inputElement, null, this.errorElement);
+
           this.errorElement.innerText = response.error;
+          this.inputElement.classList.add('is-invalid');
           return;
         }
 
-        this.openNewRoute('/incomes');
+        this.openNewRoute('/expenses');
       };
     }
 
     if (this.cancelBtn) {
       this.cancelBtn.onclick = () => {
-        this.openNewRoute('/incomes');
+        this.openNewRoute('/expenses');
       };
     }
   }

@@ -1,10 +1,10 @@
 import { OperationsService } from "../../services/operations-service";
 import { CategoriesService } from "../../services/categories-service";
 import { ValidationUtils } from "../../utils/validation-utils";
-import { Russian } from "flatpickr/dist/l10n/ru.js";
 import flatpickr from "flatpickr";
+import { Russian } from "flatpickr/dist/l10n/ru.js";
 
-export class ModifyIncome {
+export class ModifyExpense {
   constructor(openNewRoute) {
     this.openNewRoute = openNewRoute;
     this.fp = null;
@@ -17,13 +17,13 @@ export class ModifyIncome {
   }
 
   async init() {
-    this.typeSelect = document.getElementById('income-type');
-    this.categorySelect = document.getElementById('income-category-select');
-    this.amountInput = document.getElementById('income-sum');
-    this.dateInput = document.getElementById('income-date');
-    this.commentInput = document.getElementById('income-comment');
-    this.saveBtn = document.getElementById('save-income-button');
-    this.cancelBtn = document.getElementById('dismiss-income-button');
+    this.typeSelect = document.getElementById('expense-type');
+    this.categorySelect = document.getElementById('expense-category-select');
+    this.amountInput = document.getElementById('expense-sum');
+    this.dateInput = document.getElementById('expense-date');
+    this.commentInput = document.getElementById('expense-comment');
+    this.saveBtn = document.getElementById('save-expense-button');
+    this.cancelBtn = document.getElementById('dismiss-expense-button');
 
     this.fp = flatpickr(this.dateInput, {
       locale: Russian,
@@ -31,7 +31,7 @@ export class ModifyIncome {
       disableMobile: "true",
     });
 
-    const categoriesResponse = await CategoriesService.getCategories('income');
+    const categoriesResponse = await CategoriesService.getCategories('expense');
     if (categoriesResponse.categories) {
       this.categorySelect.innerHTML = '<option value="">Категория...</option>';
       categoriesResponse.categories.forEach(category => {
@@ -80,7 +80,7 @@ export class ModifyIncome {
       }
 
       const updateData = {
-        type: 'income',
+        type: 'expense',
         amount: parseInt(this.amountInput.value),
         date: this.dateInput.value,
         comment: this.commentInput.value,
