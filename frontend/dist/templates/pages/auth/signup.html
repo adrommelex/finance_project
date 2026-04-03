@@ -1,0 +1,53 @@
+<div class="form-signin w-100 flex-grow-1 d-flex align-items-center justify-content-center mx-auto">
+  <form class="d-flex flex-column align-items-center w-100 py-4 px-3">
+    <a class="pb-5" href="/">
+      <img src="/images/logo_auth.png" alt="Логотип">
+    </a>
+    <h1 class="my-3 fw-medium fs-1">Создайте аккаунт</h1>
+
+    <div class="input-group-custom">
+      <div class="icon-box">
+        <i class="bi bi-person"></i>
+      </div>
+      <input type="text" class="form-control shadow-none" placeholder="Имя" id="name">
+    </div>
+    <span id="name-error" class="error invalid-feedback">Заполните имя</span>
+
+    <div class="input-group-custom mt-2">
+      <div class="icon-box">
+        <i class="bi bi-person"></i>
+      </div>
+      <input type="text" class="form-control shadow-none" placeholder="Фамилия" id="last-name">
+    </div>
+    <span id="last-name-error" class="error invalid-feedback">Заполните фамилию</span>
+
+    <div class="input-group-custom mt-2">
+      <div class="icon-box">
+        <i class="bi bi-envelope"></i>
+      </div>
+      <input type="email" class="form-control shadow-none" placeholder="Электронная почта" id="email">
+    </div>
+    <span id="email-error" class="error invalid-feedback">Введите корректный E-mail</span>
+
+    <div class="input-group-custom mt-2">
+      <div class="icon-box">
+        <i class="bi bi-lock"></i>
+      </div>
+      <input type="password" class="form-control shadow-none" placeholder="Пароль" id="password">
+    </div>
+    <span id="password-error" class="error invalid-feedback">Заполните пароль</span>
+
+    <div class="input-group-custom mt-2">
+      <div class="icon-box">
+        <i class="bi bi-lock"></i>
+      </div>
+      <input type="password" class="form-control shadow-none" placeholder="Подтверждение пароля" id="password-repeat">
+    </div>
+    <span id="password-repeat-error" class="error invalid-feedback">Пароли не совпадают</span>
+
+    <span id="common-error" class="error invalid-feedback fs-5 mobile-fs-6 text-center my-2">Не удалось зарегистрировать пользователя.
+        Обратитесь в поддержку</span>
+    <button class="btn btn-primary w-100 mt-3" type="button" id="process-button">Войти</button>
+    <p class="mt-2 text-body-secondary">Уже есть аккаунт? <a href="/login">Войдите в систему</a></p>
+  </form>
+</div>

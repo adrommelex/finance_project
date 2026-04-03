@@ -1,0 +1,92 @@
+<button class="btn btn-outline-secondary d-flex justify-content-between d-lg-none m-3" type="button"
+        data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+  <i class="bi bi-list"></i> Меню
+</button>
+
+<div class="d-flex flex-nowrap flex-grow-1 overflow-hidden">
+  <div class="offcanvas-lg offcanvas-start d-flex flex-column flex-shrink-0 border-end bg-white"
+       tabindex="-1" id="sidebarMenu">
+
+    <div class="offcanvas-header d-lg-none">
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu"></button>
+    </div>
+    <a href="/" class="d-flex align-items-center justify-content-center pt-5 link-dark text-decoration-none">
+      <img src="/images/logo.png" alt="Логотип">
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mt-5 px-3">
+      <li class="nav-item">
+        <a href="/" class="sidebar-link nav-link active ps-3 pe-2" aria-current="page">
+          <i class="bi bi-house pe-none me-2"></i>
+          Главная
+        </a>
+      </li>
+      <li>
+        <a href="/incomes-expenses" class="sidebar-link nav-link link-dark ps-3 pe-2">
+          <i class="bi bi-cash-coin"></i>
+          Доходы & Расходы
+        </a>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle d-flex align-items-center justify-content-between w-100 ps-3 pe-2 rounded-top rounded-bottom-0 border-0"
+                data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+          Категории
+        </button>
+        <div class="collapse show" id="home-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="/incomes" class="sidebar-link link-dark d-block w-100 text-decoration-none">Доходы</a></li>
+            <li><a href="/expenses" class="sidebar-link link-dark d-block w-100 text-decoration-none rounded-bottom">Расходы</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+    <div class="sidebar-bottom-wrapper mt-auto">
+      <div class="ps-3">
+        <p class="m-0 fw-medium">Баланс: <span class="text-primary" id="balance-value">&nbsp;</span></p>
+      </div>
+      <hr>
+      <div class="dropdown ps-3 pb-5">
+        <a href="#" class="d-flex align-items-center link-dark text-decoration-none"
+           data-bs-toggle="dropdown" aria-expanded="false">
+          <svg class="me-3" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="18" cy="18" r="18" fill="#D9D9D9"/>
+            <path d="M18 18C19.0609 18 20.0783 17.5786 20.8284 16.8284C21.5786 16.0783 22 15.0609 22 14C22 12.9391 21.5786 11.9217 20.8284 11.1716C20.0783 10.4214 19.0609 10 18 10C16.9391 10 15.9217 10.4214 15.1716 11.1716C14.4214 11.9217 14 12.9391 14 14C14 15.0609 14.4214 16.0783 15.1716 16.8284C15.9217 17.5786 16.9391 18 18 18ZM20.6667 14C20.6667 14.7072 20.3857 15.3855 19.8856 15.8856C19.3855 16.3857 18.7072 16.6667 18 16.6667C17.2928 16.6667 16.6145 16.3857 16.1144 15.8856C15.6143 15.3855 15.3333 14.7072 15.3333 14C15.3333 13.2928 15.6143 12.6145 16.1144 12.1144C16.6145 11.6143 17.2928 11.3333 18 11.3333C18.7072 11.3333 19.3855 11.6143 19.8856 12.1144C20.3857 12.6145 20.6667 13.2928 20.6667 14ZM26 24.6667C26 26 24.6667 26 24.6667 26H11.3333C11.3333 26 10 26 10 24.6667C10 23.3333 11.3333 19.3333 18 19.3333C24.6667 19.3333 26 23.3333 26 24.6667ZM24.6667 24.6613C24.6653 24.3333 24.4613 23.3467 23.5573 22.4427C22.688 21.5733 21.052 20.6667 18 20.6667C14.9467 20.6667 13.312 21.5733 12.4427 22.4427C11.5387 23.3467 11.336 24.3333 11.3333 24.6613H24.6667Z"
+                  fill="#6C757D"/>
+          </svg>
+          <p class="m-0 user_name" id="profile-name">&nbsp;</p>
+        </a>
+        <ul class="dropdown-menu text-small shadow" data-popper-placement="top-start">
+          <li><a class="dropdown-item" href="#">Профиль</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-grow-1 p-1 p-md-3 p-xl-5 overflow-y-auto" id="content-layout">
+  </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg p-4">
+      <div class="modal-body text-center">
+        <h4 class="mb-4" id="modal-text">
+          Вы действительно хотите удалить категорию? Связанные доходы останутся без категории.
+        </h4>
+
+        <div class="d-flex justify-content-center gap-3">
+          <button type="button" class="btn btn-success" id="confirm-delete-button">
+            Да, удалить
+          </button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            Не удалять
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

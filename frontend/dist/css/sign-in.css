@@ -1,0 +1,51 @@
+.form-signin {
+  max-width: 429px;
+  padding: 1rem;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.input-group-custom {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid #CED4DA;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #fff;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.input-group-custom .icon-box {
+  width: 38px;
+  background-color: #E9ECEF;
+  border-right: 1px solid #ced4da;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6C757D;
+  flex-shrink: 0;
+}
+
+.input-group-custom .form-control {
+  border: none !important;
+  border-radius: 0;
+  height: 38px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+/* Эффект фокуса на всей группе */
+.input-group-custom:focus-within {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Цвет иконки при фокусе (опционально) */
+.input-group-custom:focus-within .icon-box {
+  color: #0d6efd;
+}
+
