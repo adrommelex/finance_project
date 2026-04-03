@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <h1 class="page-header mb-5">Редактирование дохода</h1>
+
+  <form class="create-category-form d-flex flex-column gap-2 col-lg-4">
+    <div>
+      <select class="form-select px-3 py-2 text-secondary" id="income-type" disabled>
+        <option value="expense">Расход</option>
+        <option value="income">Доход</option>
+      </select>
+    </div>
+
+    <div>
+      <select class="form-select px-3 py-2 text-secondary" id="income-category-select">
+        <option value="" selected disabled>Категория...</option>
+      </select>
+      <span id="category-error" class="error invalid-feedback"></span>
+    </div>
+
+    <div>
+      <input type="number" class="form-control px-3 py-2" id="income-sum" placeholder="Сумма...">
+    </div>
+    <span id="amount-error" class="error invalid-feedback"></span>
+
+    <div>
+      <input type="text" class="form-control px-3 py-2" id="income-date" placeholder="Дата...">
+    </div>
+    <span id="date-error" class="error invalid-feedback"></span>
+
+    <div class="mb-3">
+      <input type="text" class="form-control px-3 py-2" id="income-comment" placeholder="Комментарий...">
+    </div>
+    <span id="comment-error" class="error invalid-feedback"></span>
+
+    <div class="d-flex gap-2 my-4">
+      <button type="submit" class="btn btn-success" id="save-income-button">Сохранить</button>
+      <button type="button" class="btn btn-danger" id="dismiss-income-button">Отмена</button>
+    </div>
+  </form>
+</div>
